@@ -3,6 +3,11 @@
 import { useState } from 'react';
 import PersianCaptcha from '@/components/PersianCaptcha';
 
+const toPersianNumbers = (str: string): string => {
+  const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return str.replace(/[0-9]/g, (w) => persianNumbers[+w]);
+};
+
 export default function LoginPage() {
   const [nationalId, setNationalId] = useState('');
   const [password, setPassword] = useState('');
@@ -11,7 +16,8 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (captcha !== captchaInput) {
+    const convertedCaptchaInput = toPersianNumbers(captchaInput);
+    if (captcha !== convertedCaptchaInput) {
       alert('کپچا صحیح نیست'); // "Captcha is not correct"
       return;
     }
@@ -75,6 +81,7 @@ export default function LoginPage() {
               id="captchaInput"
               name="captchaInput"
               type="text"
+              inputMode="numeric"
               required
               className="block w-full px-3 py-2 mt-1 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               value={captchaInput}
