@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [animationParent] = useAutoAnimate();
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-white shadow-md sticky top-0 z-50" ref={animationParent}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
@@ -51,12 +53,12 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link href="/dashboard" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">داشبورد</Link>
-            <Link href="/tips" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">نکات بیمه</Link>
-            <Link href="/info" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">اطلاعات</Link>
-            <Link href="/rules" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">مقررات</Link>
-            <Link href="/contact" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">تماس با ما</Link>
-            <Link href="/login" className="bg-indigo-500 text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-600">
+            <Link onClick={() => setIsMenuOpen(false)} href="/dashboard" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">داشبورد</Link>
+            <Link onClick={() => setIsMenuOpen(false)} href="/tips" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">نکات بیمه</Link>
+            <Link onClick={() => setIsMenuOpen(false)} href="/info" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">اطلاعات</Link>
+            <Link onClick={() => setIsMenuOpen(false)} href="/rules" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">مقررات</Link>
+            <Link onClick={() => setIsMenuOpen(false)} href="/contact" className="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium">تماس با ما</Link>
+            <Link onClick={() => setIsMenuOpen(false)} href="/login" className="bg-indigo-500 text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-600">
               ورود / ثبت نام
             </Link>
           </div>

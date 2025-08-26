@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import PersianCaptcha from '@/components/PersianCaptcha';
+import InputMask from 'react-input-mask';
 
 const toPersianNumbers = (str: string): string => {
   const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -16,11 +17,21 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // National ID validation
+    const unmaskedNationalId = nationalId.replace(/-/g, '');
+    if (unmaskedNationalId.length !== 10) {
+      alert('کد ملی باید ۱۰ رقم باشد'); // "National ID must be 10 digits"
+      return;
+    }
+
+    // Captcha validation
     const convertedCaptchaInput = toPersianNumbers(captchaInput);
     if (captcha !== convertedCaptchaInput) {
       alert('کپچا صحیح نیست'); // "Captcha is not correct"
       return;
     }
+
     // Mock authentication logic
     console.log('Logging in with:', { nationalId, password });
     alert(`ورود موفقیت آمیز با کد ملی: ${nationalId}`); // "Successful login with National ID:"
@@ -40,14 +51,15 @@ export default function LoginPage() {
             >
               کد ملی
             </label>
-            <input
-              id="nationalId"
-              name="nationalId"
-              type="text"
-              required
-              className="block w-full px-3 py-2 mt-1 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            <InputMask
+              mask="999-999999-9"
               value={nationalId}
               onChange={(e) => setNationalId(e.target.value)}
+              className="block w-full px-3 py-2 mt-1 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="___-______-_"
+              id="nationalId"
+              name="nationalId"
+              required
             />
           </div>
           <div>

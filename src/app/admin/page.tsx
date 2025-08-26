@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 // Mock data for users and their installments
 const mockUsers = [
@@ -28,8 +29,8 @@ type Status = 'پرداخت شده' | 'در انتظار پرداخت' | 'دیر
 
 export default function AdminPage() {
   const [users] = useState(mockUsers);
-  // For now, we'll just edit the first user's installments
   const [selectedUser, setSelectedUser] = useState(users[0]);
+  const [animationParent] = useAutoAnimate();
 
   const handleStatusChange = (installmentId: number, newStatus: Status) => {
     const updatedUser = { ...selectedUser };
@@ -37,7 +38,7 @@ export default function AdminPage() {
     if (installmentIndex !== -1) {
       updatedUser.installments[installmentIndex].status = newStatus;
       setSelectedUser(updatedUser);
-      // Here you would also update the main users array and persist the change
+      // In a real app, you'd also update the main users array and persist the change
     }
   };
 
@@ -49,9 +50,9 @@ export default function AdminPage() {
         {/* Users List */}
         <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-semibold mb-4">کاربران</h2>
-          <ul>
+          <ul ref={animationParent}> {/* Animating the user list as well */}
             {users.map(user => (
-              <li key={user.id} className="p-2 hover:bg-gray-50 cursor-pointer rounded-md">
+              <li key={user.id} className="p-2 hover:bg-gray-50 cursor-pointer rounded-md" onClick={() => setSelectedUser(user)}>
                 {user.name} - {user.nationalId}
               </li>
             ))}
@@ -70,7 +71,7 @@ export default function AdminPage() {
                   <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">وضعیت</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200" ref={animationParent}>
                 {selectedUser.installments.map(inst => (
                   <tr key={inst.id}>
                     <td className="px-4 py-4 whitespace-nowrap">{inst.date}</td>
