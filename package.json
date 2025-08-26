@@ -10,13 +10,12 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
-    "@types/react-input-mask": "^3.0.6",
     "jspdf": "^3.0.2",
     "jspdf-autotable": "^5.0.2",
     "next": "15.5.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-input-mask": "^2.0.4"
+    "react-imask": "^7.6.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
